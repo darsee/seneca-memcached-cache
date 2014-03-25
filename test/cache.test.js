@@ -73,4 +73,27 @@ describe('memcached', function(){
     })
   })
 
+  it('delete', function (cb) {
+    cache.delete({key:'c1'},function(err,out){
+      assert.ok(null==err)
+      assert.equal(out,true)
+      cb()
+    })
+  });
+
+  it('add', function(cb) {
+    cache.add({key:'d1',val:'e1'},function(err,out){
+      assert.ok(null==err)
+      assert.equal(out,true)
+      cb()
+    })
+  })
+
+  it('won\'t add if key already exists', function(cb) {
+    cache.add({key:'d1',val:'e2'},function(err,out){
+      assert(err)
+    })
+  })
+
+
 })
