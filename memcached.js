@@ -6,7 +6,7 @@ var _         = require('underscore')
 var Memcached = require('memcached')
 
 
-module.exports = function( options, register ) { 
+module.exports = function( options, register ) {
   var seneca = this
 
   options   = seneca.util.deepextend({
@@ -23,14 +23,14 @@ module.exports = function( options, register ) {
 
   var mi
 
-  
+
   function setter(kind) {
     return function(args,cb) {
       var key = args.key
       var val = args.val
       var expires = args.expires || options.expires
       mi[kind](key,val,expires,function(err,out){
-        cb(err,out)
+        cb(err,{key:key})
       })
     }
   }
@@ -48,7 +48,10 @@ module.exports = function( options, register ) {
     return function(args,cb) {
       var key = args.key
       mi[kind](key,function(err,out){
-        cb(err,out)
+        if (kind === 'delete') {
+          return cb(err,{key:key})
+        }
+        cb(err,{val:out})
       })
     }
   }
@@ -63,7 +66,11 @@ module.exports = function( options, register ) {
       var key = args.key
       var val = args.val
       mi[kind](key,val,function(err,out){
-        cb(err,out)
+        if (err) return cb(err);
+        if (!out) {
+          return cb(new Error(kind + ' failed - key ' + key + ' does not exist'));
+        }
+        cb(null,{val:out})
       })
     }
   }
