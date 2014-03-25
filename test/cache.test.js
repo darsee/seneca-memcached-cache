@@ -92,6 +92,7 @@ describe('memcached', function(){
   it('won\'t add if key already exists', function(cb) {
     cache.add({key:'d1',val:'e2'},function(err,out){
       assert(err)
+      cb()
     })
   })
 
