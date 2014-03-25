@@ -1,0 +1,31 @@
+{
+  "name": "seneca-memcached-cache",
+  "version": "0.0.1",
+  "description": "memcached plugin for seneca",
+  "main": "memcached.js",
+  "scripts": {
+    "test": "node_modules/.bin/mocha test/*.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/darsee/seneca-memcached-cache.git"
+  },
+  "keywords": [
+    "seneca",
+    "memcached",
+    "plugin"
+  ],
+  "contributors": [
+    "Richard Rodger (http://richardrodger.com/)",
+    "Seamus D'Arcy"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "underscore": "1.1.x",
+    "memcached": "0.2.x"
+  },
+  "devDependencies": {
+    "seneca": ">=0.5.9"
+  },
+  "files": ["LICENSE.txt","README.md","lib/memcached.js"]
+}
