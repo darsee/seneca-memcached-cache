@@ -23,15 +23,16 @@ $ memcached -vv
 ```
 
 ```JavaScript
-var seneca = require('seneca')()
-seneca.use('memcached-cache')
+var seneca = require('seneca')();
+seneca.use('memcached-cache');
 
-seneca.act({role:'cache', cmd:'set', key:'k1', val:'v1'}, function(err){
-
-  seneca.act({role:'cache', cmd:'get', key:'k1'}, function(err,out){
-    console.log('value = '+out.val)
-  })
-})
+seneca.ready(function(err) {
+  seneca.act({role: 'cache', cmd: 'set', key: 'k1', val: 'v1'}, function(err) {
+    seneca.act({role: 'cache', cmd: 'get', key: 'k1'}, function(err, out) {
+      console.log('value = ' + out.val)
+    });
+  });
+});
 ```
 
 The full action argument pattern can be a bit tedious, so use a Seneca _pin_ to make things more convenient:
