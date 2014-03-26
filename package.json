@@ -26,10 +26,5 @@
   },
   "devDependencies": {
     "seneca": ">=0.5.9"
-  },
-  "files": [
-    "LICENSE.txt",
-    "README.md",
-    "lib/memcached.js"
-  ]
+  }
 }
