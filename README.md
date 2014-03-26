@@ -50,7 +50,7 @@ cache.set({key:'k1', val:'v1'}, function(err){
 
 ```sh
 npm install seneca
-npm install seneca-memcached
+npm install seneca-memcached-cache
 ```
 
 You'll also need [memcached](http://memcached.org/)
