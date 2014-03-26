@@ -24,7 +24,7 @@ $ memcached -vv
 
 ```JavaScript
 var seneca = require('seneca')()
-seneca.use('memcached')
+seneca.use('memcached-cache')
 
 seneca.act({role:'cache', cmd:'set', key:'k1', val:'v1'}, function(err){
 

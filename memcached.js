@@ -18,7 +18,7 @@ module.exports = function( options, register ) {
 
 
   var cmds = {}
-  var name = 'memcached'
+  var name = 'memcached-cache'
   var role = 'cache'
 
   var mi
