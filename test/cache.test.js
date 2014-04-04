@@ -18,7 +18,7 @@ describe('memcached', function(){
   it('set1', function(cb) {
     cache.set({key:'a1',val:'b1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(out.key,'a1')
+      assert.equal(out,'a1')
       cb()
     })
   })
@@ -27,7 +27,7 @@ describe('memcached', function(){
   it('get1', function(cb) {
     cache.get({key:'a1'},function(err,out){
       assert.ok(null==err)
-      assert.equal('b1',out.val)
+      assert.equal('b1',out)
       cb()
     })
   })
@@ -44,7 +44,7 @@ describe('memcached', function(){
   it('incr1', function(cb) {
     cache.incr({key:'c1',val:1},function(err,out){
       assert.ok(null==err)
-      assert.equal(out.val,1)
+      assert.equal(out,1)
       cb()
     })
   })
@@ -52,7 +52,7 @@ describe('memcached', function(){
   it('get2', function(cb) {
     cache.get({key:'c1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(1,out.val)
+      assert.equal(1,out)
       cb()
     })
   })
@@ -60,7 +60,7 @@ describe('memcached', function(){
   it('incr2', function(cb) {
     cache.incr({key:'c1',val:1},function(err,out){
       assert.ok(null==err)
-      assert.equal(out.val,2)
+      assert.equal(out,2)
       cb()
     })
   })
@@ -68,7 +68,7 @@ describe('memcached', function(){
   it('get3', function(cb) {
     cache.get({key:'c1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(2,out.val)
+      assert.equal(2,out)
       cb()
     })
   })
@@ -76,15 +76,16 @@ describe('memcached', function(){
   it('delete', function (cb) {
     cache.delete({key:'c1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(out.key,'c1')
+      assert.equal(out,'c1')
       cb()
     })
   });
 
   it('add', function(cb) {
     cache.add({key:'d1',val:'e1'},function(err,out){
+      console.log(err);
       assert.ok(null==err)
-      assert.equal(out.key,'d1')
+      assert.equal(out,'d1')
       cb()
     })
   })
@@ -99,16 +100,9 @@ describe('memcached', function(){
   it('won\'t delete if key does not exist', function (cb) {
     cache.delete({key:'zzz'},function(err,out){
       assert.ok(null==err)
-      assert.equal(out.key,'zzz')
+      assert.equal(out,'zzz')
       cb()
     })
-  });
-
-  it('won\'t incr if key doesn\'t exist', function(cb) {
-    cache.incr({key: 'zzz', val: 1}, function(err, out) {
-      assert(err)
-      cb();
-    });
   });
 
   it('won\'t incr unless value is an integer', function(cb) {

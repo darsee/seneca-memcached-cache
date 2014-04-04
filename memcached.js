@@ -30,7 +30,7 @@ module.exports = function( options, register ) {
       var val = args.val
       var expires = args.expires || options.expires
       mi[kind](key,val,expires,function(err,out){
-        cb(err,{key:key})
+        cb(err,key)
       })
     }
   }
@@ -48,10 +48,8 @@ module.exports = function( options, register ) {
     return function(args,cb) {
       var key = args.key
       mi[kind](key,function(err,out){
-        if (kind === 'delete') {
-          return cb(err,{key:key})
-        }
-        cb(err,{val:out})
+        if (kind === 'delete') return cb(err,key)
+        cb(err,out)
       })
     }
   }
@@ -66,11 +64,7 @@ module.exports = function( options, register ) {
       var key = args.key
       var val = args.val
       mi[kind](key,val,function(err,out){
-        if (err) return cb(err);
-        if (!out) {
-          return cb(new Error(kind + ' failed - key ' + key + ' does not exist'));
-        }
-        cb(null,{val:out})
+        cb(err,out)
       })
     }
   }
