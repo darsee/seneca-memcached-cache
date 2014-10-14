@@ -1,4 +1,4 @@
-/* Copyright (c) 2012 Richard Rodger */
+/* Copyright (c) 2012-2014 Richard Rodger */
 "use strict";
 
 
@@ -81,7 +81,17 @@ module.exports = function( options, register ) {
 
   cmds.flush = noargs('flush')
   cmds.stats = noargs('stats')
-  cmds.close = noargs('end')
+
+  cmds.close = function(args,done){
+    var closer = this
+    try {
+      mi.end()
+    }
+    catch(e) {
+      closer.log.error('close-error',e)
+    }
+    this.prior(args,done)
+  }
 
 
 
@@ -93,6 +103,11 @@ module.exports = function( options, register ) {
   seneca.add({role:role,cmd:'delete'},cmds.delete)
   seneca.add({role:role,cmd:'incr'},cmds.incr)
   seneca.add({role:role,cmd:'decr'},cmds.decr)
+
+  seneca.add({role:role,get:'native'},function(args,done){
+    done(null,mi)
+  })
+
 
   // connection needs to be closed
   seneca.add({role:'seneca',cmd:'close'},cmds.close)
@@ -113,16 +128,10 @@ module.exports = function( options, register ) {
   seneca.add({plugin:name,cmd:'flush'},cmds.flush)
 
 
-  seneca.add({plugin:name,cmd:'native'},function(args,done){
-    done(null,mi)
-  })
 
 
   seneca.add({init:name},function(args,done){
     mi = new Memcached(options.servers,options)
-
-    // FIX: how to detect connection errors?
-
     done()
   })
 

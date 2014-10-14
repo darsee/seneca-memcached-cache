@@ -1,19 +1,34 @@
-/* Copyright (c) 2013 Richard Rodger */
+/* Copyright (c) 2012-2014 Richard Rodger, MIT License */
 "use strict";
 
 
 // run memcached for this to work!
 
-var seneca = require('seneca')()
+var seneca = require('seneca')({log:'silent'})
 seneca.use('..')
 
-
 var assert = require('assert')
+
+var standard = require('seneca-cache-test')
 
 
 describe('memcached', function(){
 
+  it('basic',function(done){
+    standard.basictest(seneca,done)
+  })
+
+
+
   var cache = seneca.pin({role:'cache',cmd:'*'})
+
+
+  it('init',function(cb){
+    cache.delete({key:'a1'})
+    cache.delete({key:'c1'})
+    cache.delete({key:'d1'})
+    cb()
+  })
 
   it('set1', function(cb) {
     cache.set({key:'a1',val:'b1'},function(err,out){
@@ -83,7 +98,6 @@ describe('memcached', function(){
 
   it('add', function(cb) {
     cache.add({key:'d1',val:'e1'},function(err,out){
-      console.log(err);
       assert.ok(null==err)
       assert.equal(out,'d1')
       cb()
@@ -97,7 +111,7 @@ describe('memcached', function(){
     })
   })
 
-  it('won\'t delete if key does not exist', function (cb) {
+  it('noop if key does not exist', function (cb) {
     cache.delete({key:'zzz'},function(err,out){
       assert.ok(null==err)
       assert.equal(out,'zzz')
