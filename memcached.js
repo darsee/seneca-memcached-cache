@@ -6,7 +6,7 @@ var _         = require('underscore')
 var Memcached = require('memcached')
 
 
-module.exports = function( options, register ) {
+module.exports = function( options ) {
   var seneca = this
 
   options   = seneca.util.deepextend({
@@ -136,7 +136,5 @@ module.exports = function( options, register ) {
   })
 
 
-  register(null,{
-    name:name
-  })
+  return { name:name }
 }
