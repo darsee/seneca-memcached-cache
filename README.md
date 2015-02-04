@@ -8,6 +8,7 @@ It also exposes all the memcached specific actions (append, prepend, etc).
 By moving cache operations into Seneca, you can change your cache implementation or business rules at a later point.
 For example, you might decide to send certain kinds of keys to a different cache mechanism, such as redis.
 
+[![Build Status](https://travis-ci.org/darsee/seneca-memcached-cache.svg?branch=master)](https://travis-ci.org/darsee/seneca-memcached-cache)
 
 ### Support
 
