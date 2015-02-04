@@ -1,8 +1,8 @@
-/* Copyright (c) 2012-2014 Richard Rodger */
+/* Copyright (c) 2012-2015 Seamus D'Arcy, Richard Rodger */
 "use strict";
 
 
-var _         = require('underscore')
+var _         = require('lodash')
 var Memcached = require('memcached')
 
 
