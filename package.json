@@ -22,11 +22,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "lodash": "~2.4.1",
-    "memcached": "~2.1.0"
+    "lodash": "~3.10.1",
+    "memcached": "~2.2.1"
   },
   "devDependencies": {
-    "mocha": "~1.20.1",
+    "mocha": "~2.3.4",
     "seneca": "plugin",
     "seneca-cache-test": "~0.1.2"
   },

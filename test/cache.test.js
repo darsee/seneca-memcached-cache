@@ -33,7 +33,7 @@ describe('memcached', function(){
   it('set1', function(cb) {
     cache.set({key:'a1',val:'b1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(out,'a1')
+      assert.equal(out.key,'a1')
       cb()
     })
   })
@@ -42,7 +42,7 @@ describe('memcached', function(){
   it('get1', function(cb) {
     cache.get({key:'a1'},function(err,out){
       assert.ok(null==err)
-      assert.equal('b1',out)
+      assert.equal(out.value,'b1')
       cb()
     })
   })
@@ -51,7 +51,7 @@ describe('memcached', function(){
   it('set2', function(cb) {
     cache.set({key:'c1',val:0},function(err,out){
       assert.ok(null==err)
-      assert.ok(out)
+      assert.ok(out.key,'c1')
       cb()
     })
   })
@@ -59,7 +59,7 @@ describe('memcached', function(){
   it('incr1', function(cb) {
     cache.incr({key:'c1',val:1},function(err,out){
       assert.ok(null==err)
-      assert.equal(out,1)
+      assert.equal(out.value,1)
       cb()
     })
   })
@@ -67,7 +67,7 @@ describe('memcached', function(){
   it('get2', function(cb) {
     cache.get({key:'c1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(1,out)
+      assert.equal(1,out.value)
       cb()
     })
   })
@@ -75,7 +75,7 @@ describe('memcached', function(){
   it('incr2', function(cb) {
     cache.incr({key:'c1',val:1},function(err,out){
       assert.ok(null==err)
-      assert.equal(out,2)
+      assert.equal(out.value,2)
       cb()
     })
   })
@@ -83,7 +83,7 @@ describe('memcached', function(){
   it('get3', function(cb) {
     cache.get({key:'c1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(2,out)
+      assert.equal(2,out.value)
       cb()
     })
   })
@@ -91,7 +91,7 @@ describe('memcached', function(){
   it('delete', function (cb) {
     cache.delete({key:'c1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(out,'c1')
+      assert.equal(out.key,'c1')
       cb()
     })
   });
@@ -99,7 +99,7 @@ describe('memcached', function(){
   it('add', function(cb) {
     cache.add({key:'d1',val:'e1'},function(err,out){
       assert.ok(null==err)
-      assert.equal(out,'d1')
+      assert.equal(out.key,'d1')
       cb()
     })
   })
@@ -114,7 +114,7 @@ describe('memcached', function(){
   it('noop if key does not exist', function (cb) {
     cache.delete({key:'zzz'},function(err,out){
       assert.ok(null==err)
-      assert.equal(out,'zzz')
+      assert.equal(out.key,'zzz')
       cb()
     })
   });

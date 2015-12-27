@@ -12,6 +12,9 @@ module.exports = function( options ) {
   options   = seneca.util.deepextend({
     expires:3600,
     servers:['127.0.0.1:11211'],
+    legacy: {
+      scalar_results: false
+    }
     // other options as per memcached module
   }, options)
 
@@ -30,7 +33,8 @@ module.exports = function( options ) {
       var val = args.val
       var expires = args.expires || options.expires
       mi[kind](key,val,expires,function(err,out){
-        cb(err,key)
+        var result = options.legacy.scalar_results ? key : { key: key }
+        cb(err,result)
       })
     }
   }
@@ -48,8 +52,15 @@ module.exports = function( options ) {
     return function(args,cb) {
       var key = args.key
       mi[kind](key,function(err,out){
-        if (kind === 'delete') return cb(err,key)
-        cb(err,out)
+        var result
+
+        if (kind === 'delete') {
+          var result = options.legacy.scalar_results ? key : { key: key }
+          return cb(err,result)
+        }
+
+        result = options.legacy.scalar_results ? out : { value: out }
+        cb(err,result)
       })
     }
   }
@@ -63,8 +74,9 @@ module.exports = function( options ) {
     return function(args,cb) {
       var key = args.key
       var val = args.val
-      mi[kind](key,val,function(err,out){
-        cb(err,out)
+      mi[kind](key,val,function(err,out) {
+        var result = options.legacy.scalar_results ? out : { value: out }
+        cb(err,result)
       })
     }
   }
