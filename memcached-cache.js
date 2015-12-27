@@ -100,9 +100,9 @@ module.exports = function( options ) {
       mi.end()
     }
     catch(e) {
-      closer.log.error('close-error',e)
+      closer && closer.log.error('close-error',e)
     }
-    this.prior(args,done)
+    closer && closer.prior(args,done)
   }
 
 
